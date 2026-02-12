@@ -1,0 +1,83 @@
+<div class="navbar">
+  <span class="navbar-title">Voice Assist App</span>
+</div>
+
+
+<div class="voice-assist-container">
+    <div class="d-flex" *ngIf="!isemail">
+        <input type="text" class="form-control" [(ngModel)]="email" placeholder="Enter email" style="width: 300px;">
+        <button class="btn btn-primary " [disabled]="!email" style="margin-left: 1rem;" (click)="checkEmailEntered()"><i class="bi bi-arrow-right"></i></button>
+    </div>
+
+  <div class="voice-input-channel" *ngIf="isemail">
+
+
+    <button (click)="startListening()" [disabled]="isRecording" class="btn btn-success">Start</button>
+    <!-- <span *ngIf="isRecording" class="recording-indicator">
+      <span class="dot"></span> Listening...
+    </span> -->
+
+    <div class="voice-visualizer" *ngIf="isRecording">
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+  
+</div>
+
+    <button (click)="stopListening()" [disabled]="!isRecording" class="btn btn-danger">Stop</button>
+  </div>
+
+    <!-- <div class="voice-input-channel" style="margin-top: 2rem;" *ngIf="transcript && !isMessageSent">
+        <textarea [(ngModel)]="transcript" 
+                    placeholder="Transcript will appear here..." 
+                    readonly 
+                    rows="3"
+                    cols="50"
+                    class="form-control">
+        </textarea>
+  <button class="btn btn-primary mt-2" (click)="sendTranscript()">Send</button>
+  
+
+    </div> -->
+    <div class="voice-input-channel" style="margin-top: 2rem;" *ngIf=" isemail && transcript && !isMessageSent && !isScheduled">
+  <textarea [(ngModel)]="transcript" 
+            placeholder="Transcript will appear here..." 
+            readonly 
+            rows="3"
+            cols="50"
+            class="form-control">
+  </textarea>
+
+  <div class="mt-2 d-flex align-items-center gap-2">
+    <!-- Send button -->
+    <button class="btn btn-primary" (click)="sendTranscript()">Send</button>
+
+    <!-- Schedule button with Bootstrap icon -->
+    <button class="btn btn-outline-secondary" (click)="toggleSchedule()">
+      <i class="bi bi-calendar-event"></i>
+    </button>
+  </div>
+
+  <!-- Time picker shown only when schedule is active -->
+  <div *ngIf="showSchedule" class="mt-2">
+    <input type="time" [(ngModel)]="scheduledTime" class="form-control w-auto" />
+    <button class="btn btn-success mt-2" (click)="scheduleTranscript()">Schedule</button>
+  </div>
+</div>
+
+<div *ngIf="isMessageSent" class="success-message">
+  Email sent successfully!
+</div>
+
+<div *ngIf="isScheduled" class="scheduled-message">
+  Email SCheduled successfully!
+</div>
+
+</div>
+
+  
+
